@@ -1,0 +1,91 @@
+D0 info
+mass = 1864.84 ± 0.05 MeV
+lifetime = 410.1 ± 1.5 × 10−15 s
+Decays:
+K- pi+ pi0          14.3 %
+K- rho+             11.1 %
+K- pi+ rho          6.74 %
+K- e+ ve            3.57 %
+K- mu+ vmu          3.33 %
+K- pi+              3.93 %
+Ks pi0              1.20 %
+Ks pi+ pi-          2.85 %
+pi+ pi- pi0         1.47 %
+rho+ pi-            1.00 %
+K- pi+ pi0          1.14 %
+Ks omega            1.11 %
+K- pi+ omega        3.10 %
+
+
+D+ / D- info
+mass = 1869.61 +- 0.09 MeV
+lifetime = 1040 +- 7 x 10 -15 s
+Decays:
+K0bar e+ ve         8.83 %
+K0bar mu+ vmu       9.30 %
+Ks pi+              1.53 %
+Kl pi+              1.46 %
+K- pi+ pi+          9.46 %
+Ks pi+ pi0          7.24 %
+Ks rho+             6.04 %
+
+
+Ks info
+mass = 497.611 +- .013 MeV
+lifetime = .8954 +- .0004 x 10 -10 s
+Decays:
+pi+ pi-             69.2 %
+pi0 pi0             30.7 %
+
+
+Kl info
+mass = 497.611 +- .013 MeV
+lifetime = 5.116 +- .021 x 10 -8 s
+Decays:
+pi+- e-+ ve         40.55%
+pi+- mu-+ vmu       27.04%
+3 pi0               19.52%
+pi+ pi- pi0         12.54%
+
+
+K+ / K- info
+mass = 493.677 +- .0016 MeV
+lifetime = 1.238 +- .002 x 10 -8 s 
+Decays:
+mu+ vmu             63.56%
+pi0 e+ ve           5.07 %
+pi+ pi0             20.67%
+pi+ pi+ pi-         5.583%
+
+pi0 info
+mass = 134.9766 +- .0006 MeV
+lifetime = 8.52 +- .18 x 10 -17 s 
+Decays:
+gamma gamma         98.82%
+e+ e- gamma         1.17 %
+
+pi+ / pi- info
+mass = 139.57018 +- .00035 MeV
+lifetime = 2.6033 +- .0005 x 10 -8 s 
+Decays:
+mu+ vmu             99.99%
+
+rho, rho+, rho- info
+mass = 775.26 +- .25 MeV
+lifetime = ? width = 147.8 +- .9 MeV
+Decays:
+rho:
+pi+ pi-             100%
+rho+-:
+pi+- pi0            100%
+
+e+ / e- info
+mass = .510999 +- really small MeV
+lifetime = infinite
+Decays: None
+
+mu info
+mass = 105.6584 +- really small MeV
+lifetime = 2.1969811 +- really small x 10 -6 s
+Decays:
+e- vbare vmu        100%
