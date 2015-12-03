@@ -1,3 +1,6 @@
+from __future__ import division
+import numpy as np
+
 class Particle:
 
     def __init__(self,name,m,q,t):
@@ -141,11 +144,11 @@ class Particle:
         Inputs
         ------
         parent  -- Particle whose rest frame we want to boost to.  [Particle Object]
-        daughter -- Particle who is being boosted
+        self -- Particle who is being boosted
 
         Outputs
         -------
-        daughter -- Particle after being boosted
+        
 
         Notes
         -----
@@ -160,8 +163,6 @@ class Particle:
         betax = parent.px()[-1] / parent.e()
         betay = parent.py()[-1] / parent.e()
         betaz = parent.pz()[-1] / parent.e()
-        beta2 = betax*betax + betay*betay + betaz*betaz
-        gamma = 1.0/np.sqrt(1.0-beta2)
         gamma = parent.gamma()
         dot   = betax*self.__px[-1] + betay*self.__py[-1] + betaz*self.__pz[-1]
         prod  = gamma*( gamma*dot/(1.0+gamma) + self.__e )
@@ -170,6 +171,12 @@ class Particle:
         pY = self.__py[-1] + betay*prod
         pZ = self.__pz[-1] + betaz*prod
         e  = gamma*(self.__e + dot)
+        
+        betax = pX / e;
+        betay = pY / e;
+        betaz = pZ / e;
+        beta2 = betax*betax + betay*betay + betaz*betaz;
+        self.__gamma = 1.0/np.sqrt(1.0-beta2);
         
         self.__px = [pX]
         self.__py = [pY]
@@ -184,6 +191,7 @@ class Particle:
         self.__z = [parent.z()[-1]]
         
         self.__p =  np.sqrt(self.__px[0]**2+self.__py[0]**2+self.__pz[0]**2)
+        self.__e =  e
 
 
     

@@ -1,6 +1,13 @@
+from __future__ import division
 import numpy as np
+import numpy.testing as test
 import random
+import scipy
+from scipy import integrate
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 from particle_dicts import *
+from particle_class import *
 
 '''
 # This function should randomly generate the chain of decays that will occur and print them in a nested list
@@ -116,9 +123,6 @@ def two_body_decay(parent,daughter1,daughter2):
     import numpy as np
     import random
     
-    e_init = parent.e()
-    p_init = parent.e()
-    
     m = parent.mass()
     m1 = daughter1.mass()
     m2 = daughter2.mass()
@@ -159,25 +163,13 @@ def two_body_decay(parent,daughter1,daughter2):
     vY1 = [pY / (m1*gamma1)]
     vZ1 = [pZ / (m1*gamma1)]
     
-    vX2 = [pX / (m2*gamma2)]
-    vY2 = [pY / (m2*gamma2)]
-    vZ2 = [pZ / (m2*gamma2)]
+    vX2 = [-pX / (m2*gamma2)]
+    vY2 = [-pY / (m2*gamma2)]
+    vZ2 = [-pZ / (m2*gamma2)]
     
     X = [parent.x()[-1]]
     Y = [parent.y()[-1]]
     Z = [parent.z()[-1]]
-    
-    name1 = daughter1.name()
-    name2 = daughter2.name()    
-    
-    q1 = daughter1.charge()
-    q2 = daughter2.charge()
-    
-    t1 = daughter1.lifetime()
-    t2 = daughter2.lifetime()
-    
-    #daughter1 = Particle(name1,X,Y,Z,vX1,vY1,vZ1,m1,q1,t1)
-    #daughter2 = Particle(name2,X,Y,Z,vX2,vY2,vZ2,m2,q2,t2)
     
     daughter1.set_v(vX1,vY1,vZ1)
     daughter2.set_v(vX2,vY2,vZ2)
@@ -185,9 +177,10 @@ def two_body_decay(parent,daughter1,daughter2):
     daughter1.set_pos(X,Y,Z)
     daughter2.set_pos(X,Y,Z)
     
-    #daughter1.boost(parent)
-    #daughter2.boost(parent)
-
+    daughter1.boost(parent)
+    daughter2.boost(parent)
+    
+    
 # dx/dt = vx
 # dvx/dt = 0
 # dy/dt = vy
@@ -200,7 +193,7 @@ def path(particle,t,B=1):
     return np.array([vx, 0, vy, vz*q*B/m, vz, -vy*q*B/m])
 
 def travel(particle):
-    t_array = np.linspace(0,particle.lifetime(),10000)
+    t_array = np.linspace(0,np.min([particle.lifetime(), 1000]),10000)
     particle_path = scipy.integrate.odeint(path, particle.array(), t_array)
     particle.set_pos(particle_path[:,0], particle_path[:,2], particle_path[:,4])
     particle.set_v(particle_path[:,1], particle_path[:,3], particle_path[:,5])
