@@ -30,7 +30,7 @@ def main():
         ax.plot([P.x()[0]],[P.y()[0]],[P.z()[0]],'o')
         ax.plot(P.x(), P.y(), P.z(), label=P.name())
     ax.plot([200, -200], [0, 0], [0, 0])
-    plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+    plt.legend(bbox_to_anchor=(1.05, 1), loc=1, borderaxespad=0.)
     for P in chain[1:]:
         print(P)
     plt.show()
