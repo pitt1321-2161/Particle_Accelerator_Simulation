@@ -9,74 +9,114 @@ from mpl_toolkits.mplot3d import Axes3D
 from particle_dicts import *
 from particle_class import *
 
-'''
-# This function should randomly generate the chain of decays that will occur and print them in a nested list
-# The two elements are both lists who's first element is the particles created in the collision of e+ e-
-# ie if D0 and D0 bar were produced in the e+ e- collision and decayed to K- pi+ and K+ pi- respectively it would print
-# [['D0', ['K-', 'pi+']], ['D0_bar', ['K+', 'pi-']]]
-
-def decaychain():
-    particles = []
-    if random.random() < .5:
-        particles.append(['D0'])
-        particles.append(['D0_bar'])
-        if random.random()<.75:
-            particles[0].append(['K+','pi-'])
-        else:
-            particles[0].append(['K-','pi+'])
-        if random.random()<.75:
-            particles[1].append(['K+','pi-'])
-        else:
-            particles[1].append(['Ks','pi0'])
-    else:
-        particles.append(['D+'])
-        particles.append(['D-'])
-        if random.random()<.75:
-            particles[0].append(['Ks','pi+'])
-        else:
-            particles[0].append(['K+','pi0'])
-        if random.random()<.75:
-            particles[1].append(['Ks','pi-'])
-        else:
-            particles[1].append(['K-','pi0'])
-
-    return particles
-'''
 
 def make_particle(p):
     mass, charge, life = mass_charge_lifetime(p)
     P = Particle(p,mass,charge,life)
     return P
-    
+
+def make_decay(p, particles, pos):
+    rand = np.random.rand()
+    for i in range(len(decay_dict[p][0])):
+        if decay_dict[p][0][i] < rand <= decay_dict[p][0][i+1]:
+            particles.append(make_particle(decay_dict[p][1][i*2]))
+            particles.append(make_particle(decay_dict[p][1][i*2+1]))
+            particles[pos].append(particles[-2])
+            particles[pos].append(particles[-1])
+
 def decaychain():
     particles = []
-    if random.random() < .5:
+    rand = np.random.rand(10)
+    particles.append(make_particle('e+e-'))
+    particles[0].set_pos([0],[0],[0])
+    particles[0].set_v([0],[0],[0])
+    i = 0
+    while True:
+        if particles[i].lifetime() < 2000:
+            make_decay(particles[i].name(), particles, i)
+        i += 1
+        if i > len(particles) - 1:
+            break
+    #make_decay(particles[1].name(), particles, 1)
+    '''for i in range(len(decay_dict['e+e-'][0])):
+        if decay_dict['e+e-'][0][i] < rand[0] <= decay_dict['e+e-'][0][i+1]:
+            particles.append(make_particle(decay_dict['e+e-'][1][i*2]))
+            particles.append(make_particle(decay_dict['e+e-'][1][i*2+1]))
+            particles[0].append(particles[1])
+            particles[0].append(particles[2])'''
+
+    '''for i in range(len(decay_dict[particles[1].name()][0])):
+        if decay_dict[particles[1].name()][0][i] < rand[1] <= decay_dict[particles[1].name()][0][i+1]:
+            particles.append(make_particle(decay_dict[particles[1].name()][1][i*2]))
+            particles.append(make_particle(decay_dict[particles[1].name()][1][i*2+1]))
+            particles[1].append(particles[3])
+            particles[1].append(particles[4])'''
+
+    '''for i in range(len(decay_dict[particles[2].name()][0])):
+        if decay_dict[particles[2].name()][0][i] < rand[2] <= decay_dict[particles[2].name()][0][i+1]:
+            particles.append(make_particle(decay_dict[particles[2].name()][1][i*2]))
+            particles.append(make_particle(decay_dict[particles[2].name()][1][i*2+1]))
+            particles[2].append(particles[5])
+            particles[2].append(particles[6])
+
+    if particles[3].parent().lifetime() + particles[3].lifetime() < 100000:
+        for i in range(len(decay_dict[particles[3].name()][0])):
+            if decay_dict[particles[3].name()][0][i] < rand[3] <= decay_dict[particles[3].name()][0][i+1]:
+                particles.append(make_particle(decay_dict[particles[3].name()][1][i*2]))
+                particles.append(make_particle(decay_dict[particles[3].name()][1][i*2+1]))
+                particles[3].append(particles[7])
+                particles[3].append(particles[8])'''
+
+    #particles.append(make_particle('D0'))
+    return particles
+
+def olddecaychain():
+    particles = []
+    rand = np.random.rand(10)
+    if rand[0] < .5:
+        D0_num = len(particles)
         particles.append(make_particle('D0'))
+        D0_bar_num = len(particles)
         particles.append(make_particle('D0_bar'))
-        if random.random()<.75:
-            particles.append(make_particle('K+'))
+        if rand[1] <.5:
+            rho_num = len(particles)
+            particles.append(make_particle('rho'))
+            pim_num = len(particles)
             particles.append(make_particle('pi-'))
-            particles[0].append(particles[2])
-            particles[0].append(particles[3])
+            particles[D0_num].append(particles[rho_num])
+            particles[D0_num].append(particles[pim_num])
+            if rand[2] < 1:
+                pip_num = len(particles)
+                particles.append(make_particle('pi+'))
+                pim_num = len(particles)
+                particles.append(make_particle('pi-'))
+                particles[rho_num].append(particles[pip_num])
+                particles[rho_num].append(particles[pim_num])
         else:
+            Ks_num = len(particles)
             particles.append(make_particle('Ks'))
+            pi0_num = len(particles)
             particles.append(make_particle('pi0'))
-            particles[0].append(particles[2])
-            particles[0].append(particles[3])
-        if random.random()<.75:
+            particles[D0_num].append(particles[Ks_num])
+            particles[D0_num].append(particles[pi0_num])
+        if rand[3] <.75:
+            Kp_num = len(particles)
             particles.append(make_particle('K+'))
+            pim_num = len(particles)
             particles.append(make_particle('pi-'))
-            particles[1].append(particles[4])
-            particles[1].append(particles[5])
+            particles[D0_bar_num].append(particles[Kp_num])
+            particles[D0_bar_num].append(particles[pim_num])
         else:
+            Ks_num = len(particles)
             particles.append(make_particle('Ks'))
+            pi0_num = len(particles)
             particles.append(make_particle('pi0'))
-            particles[1].append(particles[4])
-            particles[1].append(particles[5])
+            particles[D0_bar_num].append(particles[Ks_num])
+            particles[D0_bar_num].append(particles[pi0_num])
     else:
         particles.append(make_particle('D+'))
         particles.append(make_particle('D-'))
-        if random.random()<.75:
+        if rand[4] <.75:
             particles.append(make_particle('Ks'))
             particles.append(make_particle('pi+'))
             particles[0].append(particles[2])
@@ -86,7 +126,7 @@ def decaychain():
             particles.append(make_particle('pi0'))
             particles[0].append(particles[2])
             particles[0].append(particles[3])
-        if random.random()<.75:
+        if rand[5] <.75:
             particles.append(make_particle('Ks'))
             particles.append(make_particle('pi-'))
             particles[1].append(particles[4])
@@ -193,7 +233,7 @@ def path(particle,t,B=1):
     return np.array([vx, 0, vy, vz*q*B/m, vz, -vy*q*B/m])
 
 def travel(particle):
-    t_array = np.linspace(0,np.min([particle.lifetime(), 1000]),10000)
+    t_array = np.linspace(0,np.min([particle.gamma() * particle.lifetime(), 2000]),10000)
     particle_path = scipy.integrate.odeint(path, particle.array(), t_array)
     particle.set_pos(particle_path[:,0], particle_path[:,2], particle_path[:,4])
     particle.set_v(particle_path[:,1], particle_path[:,3], particle_path[:,5])
@@ -208,10 +248,9 @@ def mass_charge_lifetime(particle_name):
     rand_life = np.random.standard_cauchy()
     mass = average_mass + err_mass * rand_mass
     life = average_life + err_life * rand_life
+    q = 0
     if '-' in particle_name:
-        q = -1
-    elif '+' in particle_name:
-        q = 1
-    else:
-        q = 0
+        q -= 1
+    if '+' in particle_name:
+        q += 1
     return mass, q, life
