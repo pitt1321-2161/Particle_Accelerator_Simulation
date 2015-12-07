@@ -92,6 +92,7 @@ class Particle:
             self.__name, self.__m, self.__q, self.__t, self.e(), self.__p)
 
 
+
 from tkinter import *
 
 # define a class for multiple pages
