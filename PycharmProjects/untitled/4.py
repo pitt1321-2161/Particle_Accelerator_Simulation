@@ -1,57 +1,102 @@
-from tkinter import *
+        def D_0_change():
+            a.self=1864.84
+            b=0
+            c=410.1
 
-root = Tk()
+        def D_0_bar_change():
+            a=1864.84
+            b=0
+            c=410.1
 
-# *** Entry and Label ***
+        def D_plus_change():
+            self.__a=1869.61
+            self.__b=1
+            self.__c=1040
 
-Label_1= Label(root,text="Mass")
-Label_2= Label(root,text="Charge")
-entry_1= Entry(root)
-entry_2= Entry(root)
-T1= Text(root,height=1,width=60)
+        def D_minus_change():
+            a=1869.61
+            b=-1
+            c=1040
 
+        def Ks_change():
+            a=497.611
+            b=0
+            c=89540
 
+        def Kl_change():
+            a=497.611
+            b=0
+            c=5.116*10**7
 
-T1.grid(row=6,column=1)
-Label_1.grid(row=0,sticky=W)
-Label_2.grid(row=1,sticky=W)
+        def K_plus_change():
+            a=493.677
+            b=1
+            c=1.238*10**7
 
-entry_1.grid(row=0,column=1)
-entry_2.grid(row=1,column=1)
+        def K_minus_change():
+            a=493.677
+            b=-1
+            c=1.238*10**7
 
+        def Pi_0_change():
+            a=134.9766
+            b=0
+            c=0.0852
 
+        def Pi_plus_change():
+            a=139.57018
+            b=1
+            c=2.6033*10**7
 
-# *** Choice for the type of decay ***
+        def Pi_minus_change():
+            a=139.57018
+            b=-1
+            c=2.6033*10**7
 
-#c = Checkbutton(root, text="D0->(k+)+(pi)")
-#c.grid(row=2)
+        def rho_change():
+            a=775.26
+            b=0
+            c=4.5*10**-9
 
-#d = Checkbutton(root, text="D0->(D-)+(D+)")
-#d.grid(row=3)
+        def rho_plus_change():
+            a=775.26
+            b=1
+            c=4.5*10**-9
 
-#e = Checkbutton(root, text="random decay")
-#e.grid(row=4)
+        def rho_minus_change():
+            a=775.26
+            b=-1
+            c=4.5*10**-9
 
-# *** Button ***
+        def e_plus_change():
+            a=0.510999
+            b=1
+            c=1*10**100
 
-def decay1(event):
-    print(entry_1.get())
-    T1.delete("1.0",END)
-    T1.insert(END,entry_1.get())
+        def gamma_change():
+            a=1*10**-5
+            b=0
+            c=10**100
 
-def decay2(event):
-    print("D0->(D-)+(D+) happens")
+        def mu_change():
+            a=105.6584
+            b=0
+            c=2.197*10**9
 
+        def mu__plus_change():
+            a=105.6584
+            b=1
+            c=2.197*10**9
 
+        def mu__minus_change():
+            a=105.6584
+            b=-1
+            c=2.197*10**9
 
-button_1 = Button(root, text="Run")
-button_1.bind("<Button-1>",decay1)
-button_1.grid(row=5)
+        D_plus = Particle('D+',1864.84,1,410.1)
+        D_plus.set_pos([0],[0],[0])
+        D_plus.set_v([.01],[.01],[.01])
 
-quitButton = Button(root,text="Quit",command=lambda: controller.show_frame(PageOne))
-quitButton.grid(row=5,column=1)
-
-class PageOne(tk.frame)
-
-
-root.mainloop()
+        D0 = Particle('D0',1869.61,0,1040)
+        D0.set_pos([0],[0],[0])
+        D0.set_v([.01],[.01],[.01])
