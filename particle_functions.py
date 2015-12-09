@@ -32,7 +32,7 @@ def decaychain():
     particles[0].set_v([0],[0],[0])
     i = 0
     while True:
-        if particles[i].lifetime() < 10**8:
+        if particles[i].lifetime() < 2000:
             make_decay(particles[i].name(), particles, i)
         i += 1
         if i > len(particles) - 1:
@@ -202,9 +202,9 @@ def path(particle,t,B=10**-8):
     return np.array([vx, 0, vy, vz*q*B/m, vz, -vy*q*B/m])
 
 def travel(particle):
-    t_array = np.linspace(0,np.min([particle.gamma() * particle.lifetime(), particle.gamma() * 2*10**10]),100000)
+    t_array = np.linspace(0,np.min([particle.gamma() * particle.lifetime(), 1 * 2000]),100000)
     if particle.name() == 'gamma' or particle.name() == 'e+' or particle.name() == 'e-':
-        t_array = np.linspace(0,10**8,10000)
+        t_array = np.linspace(0,2000,10000)
     particle_path = scipy.integrate.odeint(path, particle.array(), t_array)
     particle.set_pos(particle_path[:,0], particle_path[:,2], particle_path[:,4])
     particle.set_v(particle_path[:,1], particle_path[:,3], particle_path[:,5])

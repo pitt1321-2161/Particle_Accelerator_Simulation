@@ -3,6 +3,7 @@ matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 from matplotlib.figure import Figure
 
+
 import tkinter as tk
 from tkinter import ttk
 
@@ -113,8 +114,8 @@ class PageThree(tk.Frame):
 
 
         canvas = FigureCanvasTkAgg(f, self)
-        canvas.show()
         canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
+
 
         toolbar = NavigationToolbar2TkAgg(canvas, self)
         toolbar.update()

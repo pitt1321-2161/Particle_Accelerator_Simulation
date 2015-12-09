@@ -176,3 +176,5 @@ class Particle:
         else:
             return 'Particle: {}, Mass: {} GeV/c**2, Charge: {}, Lifetime: {} fs'.format(
                 self.__name, self.__m, self.__q, self.__t)
+
+
