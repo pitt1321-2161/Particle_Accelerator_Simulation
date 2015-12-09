@@ -32,42 +32,11 @@ def decaychain():
     particles[0].set_v([0],[0],[0])
     i = 0
     while True:
-        if particles[i].lifetime() < 2000:
+        if particles[i].lifetime() < 10**8:
             make_decay(particles[i].name(), particles, i)
         i += 1
         if i > len(particles) - 1:
             break
-    #make_decay(particles[1].name(), particles, 1)
-    '''for i in range(len(decay_dict['e+e-'][0])):
-        if decay_dict['e+e-'][0][i] < rand[0] <= decay_dict['e+e-'][0][i+1]:
-            particles.append(make_particle(decay_dict['e+e-'][1][i*2]))
-            particles.append(make_particle(decay_dict['e+e-'][1][i*2+1]))
-            particles[0].append(particles[1])
-            particles[0].append(particles[2])'''
-
-    '''for i in range(len(decay_dict[particles[1].name()][0])):
-        if decay_dict[particles[1].name()][0][i] < rand[1] <= decay_dict[particles[1].name()][0][i+1]:
-            particles.append(make_particle(decay_dict[particles[1].name()][1][i*2]))
-            particles.append(make_particle(decay_dict[particles[1].name()][1][i*2+1]))
-            particles[1].append(particles[3])
-            particles[1].append(particles[4])'''
-
-    '''for i in range(len(decay_dict[particles[2].name()][0])):
-        if decay_dict[particles[2].name()][0][i] < rand[2] <= decay_dict[particles[2].name()][0][i+1]:
-            particles.append(make_particle(decay_dict[particles[2].name()][1][i*2]))
-            particles.append(make_particle(decay_dict[particles[2].name()][1][i*2+1]))
-            particles[2].append(particles[5])
-            particles[2].append(particles[6])
-
-    if particles[3].parent().lifetime() + particles[3].lifetime() < 100000:
-        for i in range(len(decay_dict[particles[3].name()][0])):
-            if decay_dict[particles[3].name()][0][i] < rand[3] <= decay_dict[particles[3].name()][0][i+1]:
-                particles.append(make_particle(decay_dict[particles[3].name()][1][i*2]))
-                particles.append(make_particle(decay_dict[particles[3].name()][1][i*2+1]))
-                particles[3].append(particles[7])
-                particles[3].append(particles[8])'''
-
-    #particles.append(make_particle('D0'))
     return particles
 
 def olddecaychain():
@@ -144,39 +113,39 @@ def two_body_decay(parent,daughter1,daughter2):
     """
     This function will take a particle and make it decay to two daughter particles
     while conserving energy and momentum relativistically.
-    
+
     Inputs
     ------
     particle  -- Initial particle we want to decay.  [Particle Object]
     duaghter1 -- First daughter particle.  [Same as above, but information like its position, velocity, etc. will be unknown]
     duaghter2 -- Second daughter particle.  [Same as above]
-    
+
     Outputs
     -------
     duaghter1 -- First daughter particle.  [Same as above, but information like its position, velocity, etc. will now be known]
     duaghter2 -- Second daughter particle.  [Same as above]
-    
+
     Notes
     -----
 
     """
     import numpy as np
     import random
-    
+
     m = parent.mass()
     m1 = daughter1.mass()
     m2 = daughter2.mass()
-    
+
     # Check if decay is possible
     if m < (m1+m2):
         print('Daughter particles have greater mass than parent')
         return
-    
+
     # C.o.M. Frame energies and momenta
     e1 = (m*m + m1*m1 - m2*m2) / (2.0*m)
     e2 = (m*m - m1*m1 + m2*m2) / (2.0*m)
     P  = np.sqrt(e1*e1 - m1*m1)
-    
+
     # Get angles
     theta = np.arccos( 2.0*random.random() - 1.0 )
     phi   = 2.0 * np.pi * random.random()
@@ -228,12 +197,14 @@ def two_body_decay(parent,daughter1,daughter2):
 # dz/dt = vz
 # dvz/dt = vz*q*B/m
 
-def path(particle,t,B=1):
+def path(particle,t,B=10**-8):
     x,vx,y,vy,z,vz,m,q = particle[0],particle[1],particle[2],particle[3],particle[4],particle[5],particle[6],particle[7]
     return np.array([vx, 0, vy, vz*q*B/m, vz, -vy*q*B/m])
 
 def travel(particle):
-    t_array = np.linspace(0,np.min([particle.gamma() * particle.lifetime(), 2000]),10000)
+    t_array = np.linspace(0,np.min([particle.gamma() * particle.lifetime(), particle.gamma() * 2*10**10]),100000)
+    if particle.name() == 'gamma' or particle.name() == 'e+' or particle.name() == 'e-':
+        t_array = np.linspace(0,10**8,10000)
     particle_path = scipy.integrate.odeint(path, particle.array(), t_array)
     particle.set_pos(particle_path[:,0], particle_path[:,2], particle_path[:,4])
     particle.set_v(particle_path[:,1], particle_path[:,3], particle_path[:,5])
@@ -254,3 +225,6 @@ def mass_charge_lifetime(particle_name):
     if '+' in particle_name:
         q += 1
     return mass, q, life
+
+
+

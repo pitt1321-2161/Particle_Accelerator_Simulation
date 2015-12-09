@@ -19,12 +19,6 @@ class Particle:
         self.__px = None
         self.__py = None
         self.__pz = None
-        '''
-        for i in range(len(vx)):
-            self.__px.append(self.__gamma * self.__m * self.__vx[i])
-            self.__py.append(self.__gamma * self.__m * self.__vy[i])
-            self.__pz.append(self.__gamma * self.__m * self.__vz[i])
-        '''
         self.__p = None  # np.sqrt(self.__px[0]**2+self.__py[0]**2+self.__pz[0]**2)
         self.__e = None  # np.sqrt(self.__p**2+self.__m**2)
         self.__daughters = []
@@ -78,19 +72,8 @@ class Particle:
     def p(self):
         return self.__p
 
-    def set_p4(self, Px, Py, Pz, E):
-        pass
-
     def set_pos(self, x, y, z):
         self.__x, self.__y, self.__z = x, y, z
-
-    '''
-    def set_y(self, y):
-        self.__y = y
-        
-    def set_z(self, z):
-        self.__z = z
-    '''
 
     def set_v(self, vx, vy, vz):
         self.__vx = vx
@@ -107,14 +90,6 @@ class Particle:
             self.__pz.append(self.__gamma * self.__m * self.__vz[i])
         self.__p = np.sqrt(self.__px[0] ** 2 + self.__py[0] ** 2 + self.__pz[0] ** 2)
         self.__e = np.sqrt(self.__p ** 2 + self.__m ** 2)
-
-    '''    
-    def set_vy(self, vy):
-        self.__vy = vy
-        
-    def set_vz(self, vz):
-        self.__vz = vz
-    '''
 
     def e(self):
         if self.__p or self.__p == 0:
