@@ -171,10 +171,10 @@ class Particle:
 
     def __str__(self):
         if self.e() and self.__p:
-            return 'Particle: {}, Mass: {} GeV/c**2, Charge: {}, Lifetime: {} fs, Energy: {} MeV, Momentum: {} MeV/c'.format(
+            return 'Particle: {}, Mass: {} MeV/c**2, Charge: {}, Lifetime: {} fs, Energy: {} MeV, Momentum: {} MeV/c'.format(
                 self.__name, self.__m, self.__q, self.__t, self.e(), self.__p)
         else:
-            return 'Particle: {}, Mass: {} GeV/c**2, Charge: {}, Lifetime: {} fs'.format(
+            return 'Particle: {}, Mass: {} MeV/c**2, Charge: {}, Lifetime: {} fs'.format(
                 self.__name, self.__m, self.__q, self.__t)
 
 

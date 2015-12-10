@@ -32,6 +32,7 @@ def decaychain():
     particles[0].set_v([0],[0],[0])
     i = 0
     while True:
+        #if particles[i].lifetime() < 10**8:
         if particles[i].lifetime() < 2000:
             make_decay(particles[i].name(), particles, i)
         i += 1
@@ -150,6 +151,9 @@ def two_body_decay(parent,daughter1,daughter2):
     theta = np.arccos( 2.0*random.random() - 1.0 )
     phi   = 2.0 * np.pi * random.random()
 
+    theta = 1
+    phi   = 1
+
     # Calculate Momenta
     pX = P*np.sin(theta)*np.cos(phi)
     pY = P*np.sin(theta)*np.sin(phi)
@@ -197,13 +201,15 @@ def two_body_decay(parent,daughter1,daughter2):
 # dz/dt = vz
 # dvz/dt = vz*q*B/m
 
-def path(particle,t,B=10**-8):
+def path(particle,t,B=10):
     x,vx,y,vy,z,vz,m,q = particle[0],particle[1],particle[2],particle[3],particle[4],particle[5],particle[6],particle[7]
     return np.array([vx, 0, vy, vz*q*B/m, vz, -vy*q*B/m])
 
 def travel(particle):
-    t_array = np.linspace(0,np.min([particle.gamma() * particle.lifetime(), 1 * 2000]),100000)
+    #t_array = np.linspace(0,np.min([particle.gamma() * particle.lifetime(), particle.gamma()*2*10**10]),100000)
+    t_array = np.linspace(0,np.min([particle.gamma() * particle.lifetime(), 2000]),100000)
     if particle.name() == 'gamma' or particle.name() == 'e+' or particle.name() == 'e-':
+        # t_array = np.linspace(0,2*10**8,10000)
         t_array = np.linspace(0,2000,10000)
     particle_path = scipy.integrate.odeint(path, particle.array(), t_array)
     particle.set_pos(particle_path[:,0], particle_path[:,2], particle_path[:,4])

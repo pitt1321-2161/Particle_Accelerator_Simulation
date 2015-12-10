@@ -14,9 +14,6 @@ def main():
     for P in chain:
         if not P.parent():
             two_body_decay(P,P.daughter(0),P.daughter(1))
-            #print(P.px()[-1],P.py()[-1],P.pz()[-1])
-            #print(P.daughter(0).px()[0], P.daughter(0).py()[0], P.daughter(0).pz()[0])
-            #print(P.daughter(1).px()[0], P.daughter(1).py()[0], P.daughter(1).pz()[0])
 
         else:
             travel(P)
@@ -31,10 +28,10 @@ def main():
         ax.plot(P.x(), P.y(), P.z(), label=P.name())
     ax.plot([500, -500], [0, 0], [0, 0])
     plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-
+    print('Particle \tMass (MeV/c**2) \tCharge (e) \tLifetime (fs) \tEnergy (MeV) \tMomentum (MeV/c)')
     for P in chain[1:]:
-        if P.name() != 'gamma':
-            print(P)
+        print('{}  \t\t{:.6g}  \t\t\t{} \t\t\t{:.6g} \t {:.6g} \t{:.6g}'.format(
+                P.name(), P.mass(), P.charge(), P.lifetime(), P.e(), P.p()))
     plt.xlabel('x')
     plt.ylabel('y')
     plt.show()
